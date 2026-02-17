@@ -5,38 +5,38 @@ type Project = {
   stack: string[];
   tags: string[];
   image?: string;
-  link?: string; // Single project link
+  link?: string;
 };
 
 export const mainFeaturedProjects: Project[] = [
   {
-    title: "Membuat Ulang Website Sosial Media Threads - As A Programmer",
-    slug: "membuat-ulang-website-sosial-media-threads",
+    title: "Recreating the Threads Social Media Website – As A Programmer",
+    slug: "recreating-threads",
     purpose:
-      "Projek ini membuat ulang website sosial media Threads dengan dilengkapi fitur pesan atau percakapan pribadi menggunakan socket.io dari Youtube As A Programmer",
+      "This project recreates the Threads social media website, complete with private messaging or chat features using Socket.IO, based on the As A Programmer YouTube channel.",
     stack: ["ReactJS", "ExpressJS", "MongoDB", "Socket.io", "Tailwind CSS"],
     tags: ["web", "fullstack", "chat app"],
     image: "/images/threads-asap.png",
     // link: "https://threads-clone-demo.vercel.app", // No hosting available
   },
   {
-    title: "Mempelajari AuthJS atau NextAuthJs 5 pada NextJS - CodeWithAntonio",
-    slug: "mempelajari-authjs-atau-nextauthjs-5-pada-nextjs",
+    title: "Learning AuthJS or NextAuth.js 5 in Next.js – CodeWithAntonio",
+    slug: "authjs-or-nextauthjs-5-on-nextjs",
     purpose:
-      "Projek ini merupakan projek mendalami bagaimana NextAuthJs 5 atau AuthJs bekerja pada Next JS dari Youtube CodeWithAntonio",
+      "This project focuses on deepening the understanding of how NextAuth.js 5 (Auth.js) works in Next.js, based on the CodeWithAntonio YouTube channel.",
     stack: ["Next.js"],
     tags: ["auth", "learning"],
     image: "/images/authjs-cwa.png", // No image available
     // link: "https://ezzi-work-demo.vercel.app", // No hosting available
   },
   {
-    title: "React Todo App Tutorial",
-    slug: "react-todo-tutorial",
+    title: "EZZI School - School Management",
+    slug: "ezzi-school-management-school",
     purpose:
-      "Learning project to understand React hooks, state management, and modern React patterns through building a task management application.",
-    stack: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-    tags: ["tutorial", "learning", "react"],
-    // image: "/images/projects/react-todo-preview.jpg",
-    link: "https://react-todo-tutorial.vercel.app",
+      "A comprehensive school management application featuring student, teacher, class, and school management.",
+    stack: ["ReactJS", "ExpressJS", "MongoDB", "Chakra UI"],
+    tags: ["edutech", "school management", "fullstack"],
+    image: "/images/ezzi-school.png",
+    link: "https://dash.iskool.id",
   },
 ];

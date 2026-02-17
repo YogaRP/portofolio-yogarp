@@ -12,9 +12,6 @@ export function Footer() {
             <p className="text-sm text-muted-foreground text-center md:text-left">
               © {currentYear} Yoga Rizky Putra. All rights reserved.
             </p>
-            <p className="text-xs text-muted-foreground text-center md:text-left">
-              Built with Next.js + shadcn/ui + TypeScript + TanStack Query
-            </p>
           </div>
 
           <div className="flex items-center gap-6">
@@ -49,7 +46,7 @@ export function Footer() {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/yoga-rizky"
+              href="https://github.com/YogaRP"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -57,7 +54,7 @@ export function Footer() {
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/yoga-rizky"
+              href="https://linkedin.com/in/yogarizkyputra"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -65,7 +62,7 @@ export function Footer() {
               LinkedIn
             </a>
             <a
-              href="mailto:hello@yoga-rizky.dev"
+              href="mailto:yogarizky51@gmail.com"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               Email

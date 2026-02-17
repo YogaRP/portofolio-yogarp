@@ -18,120 +18,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { ExternalLink, Github, Search, Filter } from "lucide-react";
-import Link from "next/link";
+import { ExternalLink, Search, Filter, ImageMinus } from "lucide-react";
 import { Navigation } from "../../components/layout/navigation";
 import { Footer } from "../../components/layout/footer";
-
-// For MVP, using static data. In V2, this will come from our loaders
-const allProjects = [
-  {
-    title: "KerjaHub — AI Interview Simulation",
-    slug: "kerjahub-ai-interview",
-    summary:
-      "Job-seeker platform with AI mock interviews, CV builder, and psychotest modules.",
-    role: "Full-stack Developer",
-    stack: ["Next.js", "Node.js", "MongoDB", "shadcn/ui", "OpenAI API"],
-    startedAt: "2024-03",
-    finishedAt: "2025-02",
-    tags: ["edtech", "ai", "saas"],
-    links: {
-      demo: "https://kerjahub-demo.vercel.app",
-      github: "https://github.com/yoga-rizky/kerjahub",
-    },
-  },
-  {
-    title: "Iskool — School Management Suite",
-    slug: "iskool-school-management",
-    summary:
-      "Integrated school management system for attendance, payroll, and finance.",
-    role: "Backend & System Design",
-    stack: ["Node.js", "MongoDB", "Express.js", "React"],
-    startedAt: "2023-06",
-    finishedAt: "2024-01",
-    tags: ["edtech", "management", "dashboard"],
-    links: {
-      demo: "https://iskool-demo.vercel.app",
-    },
-  },
-  {
-    title: "Ezzi-Work — Employee Management",
-    slug: "ezzi-work-employee-management",
-    summary:
-      "Unified employee and payroll tracking system for outside sales teams.",
-    role: "System Architect",
-    stack: ["Next.js", "MongoDB", "Prisma", "Tailwind CSS"],
-    startedAt: "2023-01",
-    finishedAt: "2023-05",
-    tags: ["hr", "management", "tracking"],
-    links: {
-      github: "https://github.com/yoga-rizky/ezzi-work",
-    },
-  },
-  {
-    title: "Personal Portfolio V2",
-    slug: "portfolio-v2",
-    summary:
-      "Modern portfolio website with content management and performance optimization.",
-    role: "Full-stack Developer & Designer",
-    stack: ["Next.js 15", "TypeScript", "shadcn/ui", "TanStack Query", "MDX"],
-    startedAt: "2025-10",
-    finishedAt: null,
-    tags: ["portfolio", "performance", "seo"],
-    links: {
-      demo: "https://yoga-rizky.dev",
-      github: "https://github.com/yoga-rizky/portfolio-v2",
-    },
-  },
-];
+import Image from "next/image";
+import { mainFeaturedProjects } from "@/data/project";
 
 export default function ProjectsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStack, setSelectedStack] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("newest");
 
   // Get unique options for filters
-  const uniqueStack = [...new Set(allProjects.flatMap((p) => p.stack))].sort();
-  const uniqueTags = [...new Set(allProjects.flatMap((p) => p.tags))].sort();
+  const uniqueStack = [
+    ...new Set(mainFeaturedProjects.flatMap((p) => p.stack)),
+  ].sort();
+  const uniqueTags = [
+    ...new Set(mainFeaturedProjects.flatMap((p) => p.tags)),
+  ].sort();
 
-  // Filter and sort projects
-  const filteredProjects = allProjects
-    .filter((project) => {
-      const matchesSearch =
-        !searchTerm ||
-        project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.role.toLowerCase().includes(searchTerm.toLowerCase());
+  // Filter projects
+  const filteredProjects = mainFeaturedProjects.filter((project) => {
+    const matchesSearch =
+      !searchTerm ||
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.purpose.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesStack =
-        !selectedStack ||
-        project.stack.some((tech) =>
-          tech.toLowerCase().includes(selectedStack.toLowerCase())
-        );
+    const matchesStack =
+      (!selectedStack || selectedStack === "none") ||
+      project.stack.some((tech) =>
+        tech.toLowerCase().includes(selectedStack.toLowerCase())
+      );
 
-      const matchesTag = !selectedTag || project.tags.includes(selectedTag);
+    const matchesTag = (!selectedTag || selectedTag === "none") || project.tags.includes(selectedTag);
 
-      return matchesSearch && matchesStack && matchesTag;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "newest":
-          return (
-            new Date(b.startedAt || "").getTime() -
-            new Date(a.startedAt || "").getTime()
-          );
-        case "oldest":
-          return (
-            new Date(a.startedAt || "").getTime() -
-            new Date(b.startedAt || "").getTime()
-          );
-        case "title":
-          return a.title.localeCompare(b.title);
-        default:
-          return 0;
-      }
-    });
+    return matchesSearch && matchesStack && matchesTag;
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -173,7 +95,7 @@ export default function ProjectsPage() {
                     <SelectValue placeholder="Filter by stack" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="#">All Technologies</SelectItem>
+                    <SelectItem value="none">All Technologies</SelectItem>
                     {uniqueStack.map((tech) => (
                       <SelectItem key={tech} value={tech}>
                         {tech}
@@ -187,7 +109,7 @@ export default function ProjectsPage() {
                     <SelectValue placeholder="Filter by category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="#">All Categories</SelectItem>
+                    <SelectItem value="none">All Categories</SelectItem>
                     {uniqueTags.map((tag) => (
                       <SelectItem key={tag} value={tag}>
                         {tag}
@@ -196,22 +118,12 @@ export default function ProjectsPage() {
                   </SelectContent>
                 </Select>
               </div>
-
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-full sm:w-48">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="oldest">Oldest First</SelectItem>
-                  <SelectItem value="title">Alphabetical</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
 
             <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
               <Filter className="w-4 h-4" />
-              Showing {filteredProjects.length} of {allProjects.length} projects
+              Showing {filteredProjects.length} of {mainFeaturedProjects.length}{" "}
+              projects
             </div>
           </div>
         </section>
@@ -241,8 +153,25 @@ export default function ProjectsPage() {
                 {filteredProjects.map((project) => (
                   <Card
                     key={project.slug}
-                    className="h-full flex flex-col hover:shadow-lg transition-shadow"
+                    className="h-full flex flex-col hover:shadow-lg transition-shadow overflow-hidden"
                   >
+                    {/* Image Section */}
+                    <div className="relative h-48 bg-muted">
+                      {project.image ? (
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ImageMinus className="w-12 h-12 text-muted-foreground/40" />
+                        </div>
+                      )}
+                    </div>
+
                     <CardHeader>
                       <div className="flex flex-wrap gap-1 mb-2">
                         {project.tags.map((tag) => (
@@ -257,25 +186,18 @@ export default function ProjectsPage() {
                       </div>
                       <CardTitle className="text-lg">{project.title}</CardTitle>
                       <CardDescription className="text-sm">
-                        {project.summary}
+                        {project.purpose}
                       </CardDescription>
                     </CardHeader>
 
                     <CardContent className="flex-1 flex flex-col">
                       <div className="space-y-3 flex-1">
                         <div>
-                          <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                            Role
-                          </h4>
-                          <p className="text-sm">{project.role}</p>
-                        </div>
-
-                        <div>
                           <h4 className="font-medium text-sm text-muted-foreground mb-2">
                             Tech Stack
                           </h4>
                           <div className="flex flex-wrap gap-1">
-                            {project.stack.slice(0, 4).map((tech) => (
+                            {project.stack.map((tech) => (
                               <Badge
                                 key={tech}
                                 variant="secondary"
@@ -284,27 +206,12 @@ export default function ProjectsPage() {
                                 {tech}
                               </Badge>
                             ))}
-                            {project.stack.length > 4 && (
-                              <Badge variant="secondary" className="text-xs">
-                                +{project.stack.length - 4} more
-                              </Badge>
-                            )}
                           </div>
-                        </div>
-
-                        <div>
-                          <h4 className="font-medium text-sm text-muted-foreground mb-1">
-                            Timeline
-                          </h4>
-                          <p className="text-sm">
-                            {project.startedAt} -{" "}
-                            {project.finishedAt || "Present"}
-                          </p>
                         </div>
                       </div>
 
                       <div className="flex gap-2 mt-4 pt-4 border-t">
-                        {project.links?.demo && (
+                        {project.link ? (
                           <Button
                             asChild
                             size="sm"
@@ -312,37 +219,19 @@ export default function ProjectsPage() {
                             className="flex-1"
                           >
                             <a
-                              href={project.links.demo}
+                              href={project.link}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
                               <ExternalLink className="w-3 h-3 mr-1" />
-                              Demo
+                              Project Link
                             </a>
                           </Button>
+                        ) : (
+                          <div className="flex-1 text-center py-2 px-3 text-xs text-muted-foreground bg-muted rounded">
+                            Project Link Unavailable
+                          </div>
                         )}
-                        {project.links?.github && (
-                          <Button
-                            asChild
-                            size="sm"
-                            variant="outline"
-                            className="flex-1"
-                          >
-                            <a
-                              href={project.links.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <Github className="w-3 h-3 mr-1" />
-                              Code
-                            </a>
-                          </Button>
-                        )}
-                        <Button asChild size="sm" className="flex-1">
-                          <Link href={`/projects/${project.slug}`}>
-                            Details
-                          </Link>
-                        </Button>
                       </div>
                     </CardContent>
                   </Card>

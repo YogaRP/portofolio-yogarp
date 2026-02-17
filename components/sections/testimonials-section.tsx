@@ -50,7 +50,7 @@ export function TestimonialsSection() {
             What People Say
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Feedback from colleagues and clients I've had the pleasure to work
+            Feedback from colleagues and clients I&apos;ve had the pleasure to work
             with
           </p>
         </motion.div>
@@ -69,7 +69,7 @@ export function TestimonialsSection() {
                   <div className="flex-1">
                     <Quote className="w-8 h-8 text-muted-foreground mb-4" />
                     <blockquote className="text-sm leading-relaxed mb-6">
-                      "{testimonial.content}"
+                      &quot;{testimonial.content}&quot;
                     </blockquote>
                   </div>
 
@@ -111,7 +111,7 @@ export function TestimonialsSection() {
               href="#contact"
               className="text-foreground hover:underline font-medium"
             >
-              Let's start a conversation
+              Let&apos;s start a conversation
             </a>
           </p>
         </motion.div>

@@ -73,7 +73,7 @@ export interface ContactInfo {
 
 // MDX Content types
 export interface MDXContent {
-  frontmatter: Record<string, any>
+  frontmatter: Record<string, unknown>
   content: string
   slug: string
 }

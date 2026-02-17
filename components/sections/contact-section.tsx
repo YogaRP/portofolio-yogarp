@@ -64,10 +64,10 @@ export function ContactSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Let's Work Together
+            Let&apos;s Work Together
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Interested in collaborating or discussing ideas? Let's connect 🚀
+            Interested in collaborating or discussing ideas? Let&apos;s connect 🚀
           </p>
         </motion.div>
 
@@ -83,7 +83,7 @@ export function ContactSection() {
             <div>
               <h3 className="text-2xl font-semibold mb-4">Get in Touch</h3>
               <p className="text-muted-foreground mb-6">
-                I'm always open to discussing new opportunities, interesting
+                I&apos;m always open to discussing new opportunities, interesting
                 projects, or just having a chat about technology and
                 development. Feel free to reach out!
               </p>
@@ -97,10 +97,10 @@ export function ContactSection() {
                 <div>
                   <p className="font-medium">Email</p>
                   <a
-                    href="mailto:hello@yoga-rizky.dev"
+                    href="mailto:yogarizky51@gmail.com"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    hello@yoga-rizky.dev
+                    yogarizky51@gmail.com
                   </a>
                 </div>
               </div>
@@ -115,7 +115,7 @@ export function ContactSection() {
                     href="tel:+6281234567890"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    +62 812-3456-7890
+                    +6287870548126
                   </a>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export function ContactSection() {
                 <div>
                   <p className="font-medium">Location</p>
                   <p className="text-muted-foreground">
-                    Jakarta, Indonesia (Remote Friendly)
+                    Bogor, Indonesia (Remote Friendly)
                   </p>
                 </div>
               </div>
@@ -137,7 +137,7 @@ export function ContactSection() {
               <h4 className="font-medium mb-4">Follow Me</h4>
               <div className="flex gap-4">
                 <a
-                  href="https://github.com/yoga-rizky"
+                  href="https://github.com/YogaRP"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -146,7 +146,7 @@ export function ContactSection() {
                   GitHub
                 </a>
                 <a
-                  href="https://linkedin.com/in/yoga-rizky"
+                  href="https://linkedin.com/in/yogarizkyputra"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"

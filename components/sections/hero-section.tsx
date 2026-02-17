@@ -3,7 +3,7 @@
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
-import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
@@ -26,7 +26,7 @@ export function HeroSection() {
           transition={{ duration: 0.4, delay: 0.05 }}
           className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl"
         >
-          Hi, I'm{" "}
+          Hi, I&apos;m{" "}
           <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Yoga Rizky Putra
           </span>

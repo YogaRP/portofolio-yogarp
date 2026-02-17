@@ -4,91 +4,10 @@ import { Card, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Calendar, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
+import { experiences } from "@/data/experience";
+import { education } from "@/data/education";
 
-const experiences = [
-  {
-    title: "Senior Full-Stack Developer",
-    company: "Tech Startup",
-    period: "2024 - Present",
-    location: "Remote",
-    description:
-      "Leading development of AI-powered applications using Next.js and modern web technologies.",
-    achievements: [
-      "Built KerjaHub platform with AI interview simulation, resulting in 40% higher user engagement",
-      "Implemented scalable architecture serving 1000+ concurrent users",
-      "Reduced application load time by 60% through optimization and caching strategies",
-      "Mentored junior developers and established code review best practices",
-    ],
-    technologies: ["Next.js", "TypeScript", "MongoDB", "OpenAI API", "Docker"],
-  },
-  {
-    title: "Full-Stack Developer",
-    company: "Education Technology Company",
-    period: "2023 - 2024",
-    location: "Hybrid",
-    description:
-      "Developed comprehensive school management systems and educational platforms.",
-    achievements: [
-      "Created Iskool platform reducing administrative overhead by 60%",
-      "Designed and implemented attendance, payroll, and finance management modules",
-      "Improved data accuracy by 85% through automated validation systems",
-      "Collaborated with UX team to enhance user experience across all platforms",
-    ],
-    technologies: ["Node.js", "React", "MongoDB", "Express.js", "JWT"],
-  },
-  {
-    title: "System Architect",
-    company: "HR Solutions Provider",
-    period: "2022 - 2023",
-    location: "On-site",
-    description:
-      "Architected and developed employee management systems for tracking outside sales teams.",
-    achievements: [
-      "Built Ezzi-Work platform improving process efficiency by 50%",
-      "Integrated GPS tracking and automated payroll calculation systems",
-      "Enhanced sales team accountability by 70% through real-time monitoring",
-      "Established development workflows and deployment pipelines",
-    ],
-    technologies: [
-      "Next.js",
-      "Prisma",
-      "PostgreSQL",
-      "Tailwind CSS",
-      "GitLab CI/CD",
-    ],
-  },
-  {
-    title: "Web Developer",
-    company: "Digital Agency",
-    period: "2021 - 2022",
-    location: "Remote",
-    description:
-      "Developed responsive websites and web applications for various clients.",
-    achievements: [
-      "Delivered 15+ client projects on time and within budget",
-      "Improved website performance scores by average of 40%",
-      "Implemented SEO best practices resulting in 50% increase in organic traffic",
-      "Established client relationships and gathered requirements effectively",
-    ],
-    technologies: ["React", "JavaScript", "PHP", "WordPress", "MySQL"],
-  },
-];
 
-const education = [
-  {
-    title: "Bachelor of Computer Science",
-    institution: "University of Technology",
-    period: "2018 - 2022",
-    location: "Indonesia",
-    description:
-      "Graduated with honors, focusing on software engineering and web development.",
-    achievements: [
-      "Final project: AI-powered web application for student management",
-      "Relevant coursework: Data Structures, Algorithms, Database Systems, Web Development",
-      "Active member of Programming Club and Tech Community",
-    ],
-  },
-];
 
 export function ExperienceSection() {
   return (

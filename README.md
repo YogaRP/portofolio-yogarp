@@ -252,9 +252,9 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 📞 Contact
 
 - **Website**: [yoga-rizky.dev](https://yoga-rizky.dev)
-- **Email**: hello@yoga-rizky.dev
-- **GitHub**: [@yoga-rizky](https://github.com/yoga-rizky)
-- **LinkedIn**: [yoga-rizky](https://linkedin.com/in/yoga-rizky)
+- **Email**: yogarizky51@gmail.com
+- **GitHub**: [@yoga-rizky](https://github.com/YogaRP)
+- **LinkedIn**: [yoga-rizky](https://linkedin.com/in/yogarizkyputra)
 
 ---
 

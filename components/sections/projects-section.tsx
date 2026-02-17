@@ -11,9 +11,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
   ExternalLink,
-  Github,
   ArrowRight,
-  FolderOpen,
   ImageMinus,
 } from "lucide-react";
 import Link from "next/link";
@@ -115,17 +113,14 @@ export function ProjectsSection() {
                           rel="noopener noreferrer"
                         >
                           <ExternalLink className="w-3 h-3 mr-1" />
-                          Link Projek
+                          Project Link
                         </a>
                       </Button>
                     ) : (
                       <div className="flex-1 text-center py-2 px-3 text-xs text-muted-foreground bg-muted rounded">
-                        Link Projek Tidak Tersedia
+                        Project Link Unavailable
                       </div>
                     )}
-                    <Button asChild size="sm" className="flex-1">
-                      <Link href={`/projects/${project.slug}`}>Details</Link>
-                    </Button>
                   </div>
                 </CardContent>
               </Card>

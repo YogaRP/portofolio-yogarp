@@ -5,107 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import { motion } from "framer-motion";
-
-const skills = {
-  Frontend: {
-    current: [
-      "Next.js (App Router)",
-      "React.js",
-      "Vue.js",
-      "Blade (Laravel)",
-      "TypeScript",
-      "shadcn/ui",
-      "Chakra UI",
-      "Tailwind CSS",
-      "TanStack Query",
-    ],
-    target: [
-      "Best Practices",
-      "Performance Optimization",
-      "State Management",
-      "Security Enhancements",
-      "More UI Libraries",
-      "More Frameworks",
-      "Web Accessibility",
-      "Web Animation",
-    ],
-  },
-  Backend: {
-    current: [
-      "Node.js",
-      "Express.js",
-      "Hono",
-      "Prisma",
-      "REST APIs",
-      "GraphQL",
-      "Laravel",
-      "NestJS",
-      "Redis",
-      "TypeScript",
-    ],
-    target: [
-      "Go",
-      "gRPC",
-      "tRPC",
-      "More Efficiency Patterns",
-      "Best Practices",
-      "Security Enhancements",
-      "Caching Strategies",
-      "Handling High Load",
-      "Monorepos",
-      "Microservices",
-    ],
-  },
-  Database: {
-    current: ["PostgreSQL", "MongoDB", "Redis", "Supabase", "Database Design"],
-    target: ["Advanced Query Optimization", "Security Best Practices"],
-  },
-  Tools: {
-    current: ["Git", "GitHub", "Vercel", "Netlify", "Postman"],
-    target: [
-      "Insomnia",
-      "CI/CD",
-      "Docker",
-      "Kubernetes",
-      "AWS",
-      "GCP",
-      "Azure",
-      "K6s",
-      "Grafana",
-      "Prometheus",
-      "Sentry",
-      "More DevOps Tools",
-      "More Cloud Services",
-    ],
-  },
-  NonTech: {
-    current: [
-      "Agile Methodologies",
-      "Scrum",
-      "Jira",
-      "Confluence",
-      "Figma",
-      "Notion",
-      "Communication",
-      "Collaboration",
-      "Problem-Solving",
-      "Adaptability",
-    ],
-    target: [
-      "UI/UX",
-      "Product Design",
-      "UX Principles",
-      "Leadership Skills",
-      "More Communication Skills",
-      "More Collaboration Skills",
-      "Project Management",
-      "Public Speaking",
-      "Technical Writing",
-      "Mentorship",
-      "Time Management",
-    ],
-  },
-};
+import { skills } from "@/data/skills";
 
 export function AboutSection() {
   return (
@@ -140,7 +40,7 @@ export function AboutSection() {
                 Who I Am & My Focus
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                I'm Yoga Rizky Putra, a full-stack web developer passionate
+                I&apos;m Yoga Rizky Putra, a full-stack web developer passionate
                 about turning ideas into scalable digital solutions. With a
                 strong foundation in web technologies, I focus on building
                 applications that will solve problems and bring joy and value to
@@ -171,9 +71,10 @@ export function AboutSection() {
               <h3 className="text-xl font-semibold mb-4">Current Direction</h3>
               <p className="text-muted-foreground leading-relaxed">
                 Currently deepening my product design and UX understanding to
-                build more impactful features. I'm exploring advanced patterns
-                in system architecture, performance optimization, and exploring
-                AI integration to create smarter, more adaptive applications.
+                build more impactful features. I&apos;m exploring advanced
+                patterns in system architecture, performance optimization, and
+                exploring AI integration to create smarter, more adaptive
+                applications.
               </p>
             </div>
           </motion.div>
@@ -191,7 +92,7 @@ export function AboutSection() {
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="Frontend" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-2">
+                  <TabsList className="grid w-full grid-cols-2 lg:grid-cols-3 gap-2">
                     {Object.keys(skills).map((category) => (
                       <TabsTrigger
                         key={category}
@@ -205,23 +106,21 @@ export function AboutSection() {
 
                   {Object.entries(skills).map(
                     ([category, skillList], index) => (
-                      <>
-                        <TabsContent
-                          key={category + "current" + index}
-                          value={category}
-                          className="mt-8"
-                        >
+                      <div key={category + "current" + index}>
+                        <TabsContent value={category}>
                           <p className="font-semibold mb-2">Current Skills:</p>
                           <div className="flex flex-wrap gap-2">
-                            {skillList.current.map((skill) => (
-                              <Badge
-                                key={skill}
-                                variant="secondary"
-                                className="text-xs"
-                              >
-                                {skill}
-                              </Badge>
-                            ))}
+                            {skillList.current.map(
+                              (skill: string, index: number) => (
+                                <Badge
+                                  key={skill + index}
+                                  variant="secondary"
+                                  className="text-xs"
+                                >
+                                  {skill}
+                                </Badge>
+                              ),
+                            )}
                           </div>
                         </TabsContent>
                         <TabsContent
@@ -233,7 +132,7 @@ export function AboutSection() {
                             Next Target Skills:
                           </p>
                           <div className="flex flex-wrap gap-2">
-                            {skillList.target.map((skill) => (
+                            {skillList.target.map((skill: string) => (
                               <Badge
                                 key={skill}
                                 variant="secondary"
@@ -244,8 +143,8 @@ export function AboutSection() {
                             ))}
                           </div>
                         </TabsContent>
-                      </>
-                    )
+                      </div>
+                    ),
                   )}
                 </Tabs>
               </CardContent>

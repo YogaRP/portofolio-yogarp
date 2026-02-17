@@ -1,20 +1,31 @@
-version: "3.9"
+version: '3.8'
+
 services:
-  web:
-    build: .
+  portfolio-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-yoga-low-spec
     ports:
       - "3000:3000"
-    env_file: .env
     environment:
-      - NODE_ENV=development
-    volumes:
-      - .:/app
-      - /app/node_modules
-    depends_on:
-      - redis
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    # Low spec resource limits for performance testing
+    cpus: 0.5                # Half a CPU core
+    mem_limit: 512m          # 512 MB RAM
+    mem_reservation: 256m    # Reserve 256 MB RAM
+    # Health check
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - portfolio-network
 
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    command: ["redis-server", "--save", "", "--appendonly", "no"]
+networks:
+  portfolio-network:
+    driver: bridge

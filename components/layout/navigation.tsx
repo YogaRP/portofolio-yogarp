@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Menu, X, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -15,7 +14,6 @@ const navigation = [
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-background/80 backdrop-blur-sm border-b">
