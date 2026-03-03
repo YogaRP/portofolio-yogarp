@@ -12,6 +12,10 @@ export const requestsApi = {
     return http.get<{ data: Request }>(`/collab-requests/${id}`);
   },
 
+  getAttachment: (id: number) => {
+    return http.get(`/collab-requests/${id}/attachment`);
+  },
+
   delete: (id: number) => {
     return http.delete(`/collab-requests/${id}`);
   },

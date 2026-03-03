@@ -14,10 +14,10 @@ import {
   Eye,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useCollabRequest } from "@/features/requests/hooks";
+import { useGetAllCollabRequest } from "@/features/requests/hooks";
 
 export default function DashboardPage() {
-  const { data: requestsData, isLoading, error } = useCollabRequest();
+  const { data: requestsData, isLoading, error } = useGetAllCollabRequest();
 
   const requests = requestsData || [];
   const totalRequests = requests.length;

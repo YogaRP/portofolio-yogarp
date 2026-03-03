@@ -6,42 +6,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Request } from "@/lib/types";
 import { ChevronLeft, Download } from "lucide-react";
-
-// Mock data - replace with actual API call
-const mockRequests: Request[] = [
-  {
-    id: 1,
-    email: "john.doe@example.com",
-    subject: "Partnership Opportunity",
-    message:
-      "I'd like to discuss a collaboration opportunity for a web project. I have extensive experience in full-stack development and would love to explore how we can work together.",
-    attachment: undefined,
-    createdAt: "2025-12-15T10:30:00Z",
-    updatedAt: "2025-12-15T10:30:00Z",
-  },
-  {
-    id: 2,
-    email: "jane.smith@example.com",
-    subject: "Design Collaboration",
-    message:
-      "Looking for a developer to work on an exciting project. We're building a SaaS platform and need experienced developers to join our team.",
-    attachment: "proposal.pdf",
-    createdAt: "2025-12-14T14:22:00Z",
-    updatedAt: "2025-12-14T14:22:00Z",
-  },
-  {
-    id: 3,
-    email: "mike.wilson@example.com",
-    subject: "Freelance Project",
-    message:
-      "Need help with a mobile app development project. This is a 6-month engagement with potential for long-term partnership.",
-    attachment: undefined,
-    createdAt: "2025-12-13T09:15:00Z",
-    updatedAt: "2025-12-13T09:15:00Z",
-  },
-];
+import { useGetAttachmentCollabRequest, useGetByIdCollabRequest } from "@/features/requests/hooks";
+import { Spinner } from "@/components/ui/spinner";
 
 const getInitials = (email: string) => {
   return email
@@ -63,14 +30,36 @@ const formatDate = (dateString: string) => {
 
 const DetailPage = () => {
   const params = useParams();
-  const router = useRouter();
-  const id = params.id as string;
+  const id = params.id as unknown
 
-  const request = mockRequests.find((r) => r.id === parseInt(id));
+  const { data, isFetched, isFetching } = useGetByIdCollabRequest(id as number)
 
-  if (!request) {
+  const {
+    data: attachment,
+    refetch: fetchAttachment,
+    isFetching: isFetchingAttachment,
+  } = useGetAttachmentCollabRequest(id as number);
+
+  const handleDownload = async () => {
+    const result = await fetchAttachment();
+
+    if (result.data) {
+      window.location.href = result.data;
+    }
+  };
+  if (isFetching) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 p-4 md:p-8">
+        <div className="flex justify-center items-center">
+          <h1 className="text-xl font-bold mr-2">Loading data, please wait...</h1> <Spinner className="size-6" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="space-y-6 p-4 md:p-8">
         <Link href="/admin/collab-request">
           <Button variant="outline" size="sm">
             <ChevronLeft className="w-4 h-4 mr-2" />
@@ -78,17 +67,17 @@ const DetailPage = () => {
           </Button>
         </Link>
         <Card className="p-8 text-center">
-          <p className="text-muted-foreground">Request not found</p>
+          <p className="text-muted-foreground">data not found</p>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4 md:p-8">
       <div className="flex items-center justify-between">
         <Link href="/admin/collab-request">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="hover:cursor-pointer">
             <ChevronLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
@@ -100,27 +89,37 @@ const DetailPage = () => {
         <div className="lg:col-span-2 space-y-6">
           {/* Subject */}
           <Card className="p-6">
-            <h1 className="text-2xl font-bold">{request.subject}</h1>
-            <p className="text-muted-foreground mt-2">{request.email}</p>
+            <h1 className="text-2xl font-bold">{data.subject}</h1>
+            <p className="text-muted-foreground mt-2">{data.email}</p>
           </Card>
 
           {/* Message */}
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Message</h2>
             <p className="text-foreground whitespace-pre-wrap leading-relaxed">
-              {request.message}
+              {data.message}
             </p>
           </Card>
 
           {/* Attachment */}
-          {request.attachment && (
+          {data.attachment && (
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">Attachment</h2>
               <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/30">
-                <span className="font-medium">{request.attachment}</span>
-                <Button variant="ghost" size="sm">
-                  <Download className="w-4 h-4 mr-2" />
-                  Download
+                <span className="font-medium">{data.attachment}</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hover:cursor-pointer"
+                  onClick={handleDownload}
+                  disabled={isFetchingAttachment}
+                >
+                  {isFetchingAttachment ? (
+                    <Spinner className="w-4 h-4 mr-2" />
+                  ) : (
+                    <Download className="w-4 h-4 mr-2" />
+                  )}
+                  {isFetchingAttachment ? "Loading..." : "Download"}
                 </Button>
               </div>
             </Card>
@@ -136,7 +135,7 @@ const DetailPage = () => {
               <div className="flex justify-center">
                 <Avatar className="h-16 w-16">
                   <AvatarFallback className="bg-primary text-primary-foreground text-lg">
-                    {getInitials(request.email)}
+                    {getInitials(data.email)}
                   </AvatarFallback>
                 </Avatar>
               </div>
@@ -146,29 +145,29 @@ const DetailPage = () => {
                     Email
                   </p>
                   <p className="text-sm font-medium break-all">
-                    {request.email}
+                    {data.email}
                   </p>
                 </div>
               </div>
             </div>
           </Card>
 
-          {/* Request Details */}
+          {/* data Details */}
           <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">Request Details</h2>
+            <h2 className="text-lg font-semibold mb-4">data Details</h2>
             <div className="space-y-3">
               <div>
                 <p className="text-xs text-muted-foreground uppercase">
-                  Request ID
+                  data ID
                 </p>
-                <p className="text-sm font-medium">#{request.id}</p>
+                <p className="text-sm font-medium">#{data.id}</p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground uppercase">
                   Submitted Date
                 </p>
                 <p className="text-sm font-medium">
-                  {formatDate(request.createdAt)}
+                  {formatDate(data.createdAt)}
                 </p>
               </div>
               <div>
@@ -176,19 +175,11 @@ const DetailPage = () => {
                   Last Updated
                 </p>
                 <p className="text-sm font-medium">
-                  {formatDate(request.updatedAt)}
+                  {formatDate(data.updatedAt)}
                 </p>
               </div>
             </div>
           </Card>
-
-          {/* Actions */}
-          <div className="space-y-2">
-            <Button className="w-full">Approve</Button>
-            <Button variant="destructive" className="w-full">
-              Decline
-            </Button>
-          </div>
         </div>
       </div>
     </div>
