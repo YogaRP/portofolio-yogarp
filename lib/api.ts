@@ -26,7 +26,7 @@ http.interceptors.response.use(
 
       try {
         await authApi.refresh();
-        // return http(originalRequest);
+        return http(originalRequest);
       } catch (error) {
         window.location.href = "/auth/login-admin";
         return Promise.reject(error);

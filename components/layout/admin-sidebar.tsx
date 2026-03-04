@@ -3,7 +3,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -25,7 +24,7 @@ const menuItems = [
   },
   {
     name: "User and Availability",
-    url: "/admin/user-availability",
+    url: "/admin/profile",
     icon: UserCheck,
   },
 ];

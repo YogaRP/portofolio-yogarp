@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { authApi } from "./api";
+import { User, Availibility } from "./types";
 
 export const authKeys = {
   me: ["auth", "me"],
+  availibility: ["auth", "availibility"],
 };
 
 export const useMe = () => {
@@ -36,6 +38,44 @@ export const useLogout = () => {
 
     onSuccess: () => {
       queryClient.removeQueries({
+        queryKey: authKeys.me,
+      });
+    },
+  });
+};
+
+export const useUpdateProfile = (id: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Partial<User>) => authApi.updateProfile(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: authKeys.me,
+      });
+    },
+  });
+};
+
+export const useGetAvailibility = () => {
+  return useQuery({
+    queryKey: authKeys.availibility,
+    queryFn: async () => (await authApi.getAvailibility()).data,
+    retry: false,
+  });
+};
+
+export const useUpdateAvailibility = (id: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Partial<Availibility>) =>
+      authApi.updateAvailibility(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: authKeys.availibility,
+      });
+      queryClient.invalidateQueries({
         queryKey: authKeys.me,
       });
     },
