@@ -1,10 +1,6 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { Label } from "../ui/label";
 import {
   Mail,
   MessageSquare,
@@ -15,43 +11,15 @@ import {
   Phone,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useGetAvailibility } from "@/features/availibility/hooks";
+import { useGetMePublic } from "@/features/user/hooks";
+import { Badge } from "../ui/badge";
+import ContactMeForm from "../forms/contact-me-form";
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // In a real app, you'd send this data to your API
-    console.log("Form submitted:", formData);
-
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
-
-    // Show success message (you could use a toast notification)
-    alert("Message sent successfully! I'll get back to you soon.");
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const { data: availData, isError: isAvailError
+  } = useGetAvailibility()
+  const { data: mePublicData, isError: isMePublicError } = useGetMePublic()
 
   return (
     <section id="contact" className="py-24 px-6 lg:px-8">
@@ -83,7 +51,7 @@ export function ContactSection() {
             <div>
               <h3 className="text-2xl font-semibold mb-4">Get in Touch</h3>
               <p className="text-muted-foreground mb-6">
-                I&apos;m always open to discussing new opportunities, interesting
+                I&apos;m always open to discussing opportunities, interesting
                 projects, or just having a chat about technology and
                 development. Feel free to reach out!
               </p>
@@ -97,10 +65,10 @@ export function ContactSection() {
                 <div>
                   <p className="font-medium">Email</p>
                   <a
-                    href="mailto:yogarizky51@gmail.com"
+                    href={!isMePublicError && mePublicData?.data?.email !== "" ? `mailto:${mePublicData?.data?.email}` : "mailto:yogarizky51@gmail.com"}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    yogarizky51@gmail.com
+                    {!isMePublicError && mePublicData?.data?.email !== "" ? mePublicData?.data?.email : "yogarizky51@gmail.com"}
                   </a>
                 </div>
               </div>
@@ -112,10 +80,10 @@ export function ContactSection() {
                 <div>
                   <p className="font-medium">Phone</p>
                   <a
-                    href="tel:+6281234567890"
+                    href={!isMePublicError && mePublicData?.data?.phone !== "" ? `tel:${mePublicData?.data?.phone}` : "tel:+6281234567890"}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    +6287870548126
+                    {!isMePublicError && mePublicData?.data?.phone !== "" ? mePublicData?.data?.phone : "+6287870548126"}
                   </a>
                 </div>
               </div>
@@ -126,8 +94,8 @@ export function ContactSection() {
                 </div>
                 <div>
                   <p className="font-medium">Location</p>
-                  <p className="text-muted-foreground">
-                    Bogor, Indonesia (Remote Friendly)
+                  <p className="text-muted-foreground max-w-2/3">
+                    {!isAvailError && availData?.data?.jobLocation ? availData?.data?.jobLocation : "Bogor, Depok, Jakarta, Indonesia (Remote Friendly)"}
                   </p>
                 </div>
               </div>
@@ -137,7 +105,7 @@ export function ContactSection() {
               <h4 className="font-medium mb-4">Follow Me</h4>
               <div className="flex gap-4">
                 <a
-                  href="https://github.com/YogaRP"
+                  href={!isMePublicError && mePublicData?.data?.github !== "" ? mePublicData?.data?.github : "https://github.com/YogaRP"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -146,7 +114,7 @@ export function ContactSection() {
                   GitHub
                 </a>
                 <a
-                  href="https://linkedin.com/in/yogarizkyputra"
+                  href={!isMePublicError && mePublicData?.data?.linkedin !== "" ? mePublicData?.data?.linkedin : "https://linkedin.com/in/yogarizkyputra"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -167,82 +135,16 @@ export function ContactSection() {
           >
             <Card>
               <CardHeader>
+                <Badge variant="outline" className="mb-6">
+                  {!isAvailError && availData?.data?.acceptJob ? "Available for new opportunities" : "Currently not available for new opportunities, but feel free to reach out!"}
+                </Badge>
                 <CardTitle className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
                   Send a Message
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Your name"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="your.email@example.com"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      placeholder="What would you like to discuss?"
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Tell me about your project, ideas, or just say hello!"
-                      rows={5}
-                      required
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4 mr-2" />
-                        Send Message
-                      </>
-                    )}
-                  </Button>
-                </form>
+                <ContactMeForm />
               </CardContent>
             </Card>
           </motion.div>

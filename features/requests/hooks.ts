@@ -1,8 +1,22 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
 import { requestsApi } from "./api";
+import { Request } from "@/lib/types";
 
 export const collabRequestKeys = {
   collab_request: ["collab-request"],
+};
+
+export const useCreateCollabRequest = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Partial<Request>) => requestsApi.createCollabRequest(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: collabRequestKeys.collab_request,
+      });
+    },
+  });
 };
 
 export const useGetAllCollabRequest = () => {

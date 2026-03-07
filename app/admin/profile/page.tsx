@@ -1,10 +1,11 @@
 "use client";
 
-import { useMe, useGetAvailibility } from "@/features/auth/hooks";
+import { useMe } from "@/features/auth/hooks";
 import { ProfileForm } from "@/components/forms/profile-form";
 import { Spinner } from "@/components/ui/spinner";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useGetAvailibility } from "@/features/availibility/hooks";
 
 export default function ProfilePage() {
     const { data: user, isLoading: userLoading, error: userError } = useMe();

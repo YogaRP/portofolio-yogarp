@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useGetAllCollabRequest } from "@/features/requests/hooks";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const { data: requestsData, isLoading, error } = useGetAllCollabRequest();
@@ -210,18 +211,20 @@ export default function DashboardPage() {
 
                     {/* Right Section - Actions */}
                     <div className="flex flex-shrink-0 gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="gap-2 text-gray-700 hover:text-gray-900"
-                      >
-                        <Eye className="h-4 w-4" />
-                        <span className="hidden sm:inline">View</span>
-                      </Button>
-                      <Button variant="destructive" size="sm" className="gap-2">
+                      <Link href={`/admin/collab-request/${request.id}`}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="gap-2 text-gray-700 hover:text-gray-900"
+                        >
+                          <Eye className="h-4 w-4" />
+                          <span className="hidden sm:inline">View</span>
+                        </Button>
+                      </Link>
+                      {/* <Button variant="destructive" size="sm" className="gap-2">
                         <Trash2 className="h-4 w-4" />
                         <span className="hidden sm:inline">Delete</span>
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </div>
@@ -231,9 +234,11 @@ export default function DashboardPage() {
 
           {requests.length > 5 && (
             <div className="border-t border-gray-200 px-6 py-4">
-              <Button variant="outline" className="w-full">
-                View All Requests
-              </Button>
+              <Link href="/admin/collab-request">
+                <Button variant="outline" className="w-full">
+                  View All Requests
+                </Button>
+              </Link>
             </div>
           )}
         </Card>

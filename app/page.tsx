@@ -8,6 +8,7 @@ import { Footer } from "../components/layout/footer";
 import { Navigation } from "../components/layout/navigation";
 
 export default function HomePage() {
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

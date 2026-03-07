@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronLeft, Download } from "lucide-react";
 import { useGetAttachmentCollabRequest, useGetByIdCollabRequest } from "@/features/requests/hooks";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 const getInitials = (email: string) => {
   return email
@@ -41,10 +42,14 @@ const DetailPage = () => {
   } = useGetAttachmentCollabRequest(id as number);
 
   const handleDownload = async () => {
-    const result = await fetchAttachment();
+    try {
+      const result = await fetchAttachment();
 
-    if (result.data) {
-      window.location.href = result.data;
+      if (result.data) {
+        window.location.href = result.data;
+      }
+    } catch (error) {
+      toast("File not found or already deleted.", { position: "bottom-center" })
     }
   };
   if (isFetching) {

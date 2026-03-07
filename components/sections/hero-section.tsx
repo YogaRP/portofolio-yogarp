@@ -5,8 +5,13 @@ import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
+import { useGetAvailibility } from "@/features/availibility/hooks";
+import { useGetMePublic } from "@/features/user/hooks";
 
 export function HeroSection() {
+  const { data: availData, isError: isAvailError } = useGetAvailibility()
+  const { data: mePublicData, isError: isMePublicError } = useGetMePublic()
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 pt-16 lg:px-8">
       <div className="mx-auto max-w-4xl text-center">
@@ -16,7 +21,7 @@ export function HeroSection() {
           transition={{ duration: 0.3 }}
         >
           <Badge variant="outline" className="mb-6">
-            Currently not available for new opportunities
+            {!isAvailError && availData?.data?.acceptJob ? "Available for new opportunities" : "Currently not available for new opportunities"}
           </Badge>
         </motion.div>
 
@@ -85,7 +90,7 @@ export function HeroSection() {
           className="mt-8 flex items-center justify-center gap-6"
         >
           <a
-            href="https://github.com/YogaRP"
+            href={!isMePublicError && mePublicData?.data?.github !== "" ? mePublicData?.data?.github : "https://github.com/YogaRP"}
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
@@ -94,7 +99,7 @@ export function HeroSection() {
             <span className="sr-only">GitHub</span>
           </a>
           <a
-            href="https://linkedin.com/in/yogarizkyputra"
+            href={!isMePublicError && mePublicData?.data?.linkedin !== "" ? mePublicData?.data?.linkedin : "https://linkedin.com/in/yogarizkyputra"}
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
@@ -103,7 +108,7 @@ export function HeroSection() {
             <span className="sr-only">LinkedIn</span>
           </a>
           <a
-            href="mailto:yogarizky51@gmail.com"
+            href={!isMePublicError && mePublicData?.data?.email !== "" ? `mailto:${mePublicData?.data?.email}` : "mailto:yogarizky51@gmail.com"}
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             <Mail className="h-6 w-6" />

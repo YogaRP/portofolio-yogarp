@@ -6,12 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import { Textarea } from "../../components/ui/textarea";
-import { Label } from "../../components/ui/label";
 import { Badge } from "../../components/ui/badge";
-import { Separator } from "../../components/ui/separator";
 import {
   Mail,
   MessageSquare,
@@ -25,83 +20,38 @@ import {
   Coffee,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Navigation } from "../../components/layout/navigation";
 import { Footer } from "../../components/layout/footer";
+import ContactMeForm from "@/components/forms/contact-me-form";
+import { useGetAvailibility } from "@/features/availibility/hooks";
+import { useGetMePublic } from "@/features/user/hooks";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-    projectType: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: availData, isError: isAvailError
+  } = useGetAvailibility()
+  const { data: mePublicData, isError: isMePublicError } = useGetMePublic()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // In a real app, you'd send this data to your API
-    console.log("Form submitted:", formData);
-
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-      projectType: "",
-    });
-    setIsSubmitting(false);
-
-    // Show success message (you could use a toast notification)
-    alert("Message sent successfully! I'll get back to you within 24 hours.");
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const projectTypes = [
-    "Web Development",
-    "Mobile App",
-    "E-commerce",
-    "SaaS Platform",
-    "API Development",
-    "Consulting",
-    "Other",
-  ];
 
   const availability = [
     {
-      type: "Full-time Opportunities",
-      status: "Open",
+      type: "Accept Opportunity",
+      status: !isAvailError && availData?.data?.acceptJob ? "Yes" : "Not Available",
       color:
         "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400",
     },
-    {
-      type: "Freelance Projects",
-      status: "Available",
-      color: "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400",
-    },
-    {
-      type: "Consulting",
-      status: "Limited",
-      color:
-        "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400",
-    },
+    ...(!isAvailError && availData?.data?.acceptJob ? [
+      {
+        type: "Job Contract",
+        status: !isAvailError && availData?.data?.jobContract ? availData?.data?.jobContract === "ALL" ? "Full-time, Freelance" : availData?.data?.jobContract : "Not Available",
+        color: "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400",
+      },
+      {
+        type: "Job Type",
+        status: !isAvailError && availData?.data?.jobType ? availData?.data?.jobType === "ALL" ? "On-site, Remote" : availData?.data?.jobType : "Not Available",
+        color:
+          "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400",
+      }
+    ] : [])
   ];
 
   return (
@@ -154,10 +104,10 @@ export default function ContactPage() {
                         <div>
                           <p className="font-medium">Email</p>
                           <a
-                            href="mailto:yogarizky51@gmail.com"
+                            href={!isMePublicError && mePublicData?.data?.email !== "" ? `mailto:${mePublicData?.data?.email}` : "mailto:yogarizky51@gmail.com"}
                             className="text-muted-foreground hover:text-foreground transition-colors"
                           >
-                            yogarizky51@gmail.com
+                            {!isMePublicError && mePublicData?.data?.email !== "" ? mePublicData?.data?.email : "yogarizky51@gmail.com"}
                           </a>
                         </div>
                       </div>
@@ -169,10 +119,10 @@ export default function ContactPage() {
                         <div>
                           <p className="font-medium">Phone</p>
                           <a
-                            href="tel:+6281234567890"
+                            href={!isMePublicError && mePublicData?.data?.phone !== "" ? `tel:${mePublicData?.data?.phone}` : "tel:+6281234567890"}
                             className="text-muted-foreground hover:text-foreground transition-colors"
                           >
-                            +62 812-3456-7890
+                            {!isMePublicError && mePublicData?.data?.phone !== "" ? mePublicData?.data?.phone : "+6287870548126"}
                           </a>
                         </div>
                       </div>
@@ -184,10 +134,7 @@ export default function ContactPage() {
                         <div>
                           <p className="font-medium">Location</p>
                           <p className="text-muted-foreground">
-                            Jakarta, Indonesia
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Remote Friendly
+                            {!isAvailError && availData?.data?.jobLocation ? availData?.data?.jobLocation : "Bogor, Depok, Jakarta, Indonesia (Remote Friendly)"}
                           </p>
                         </div>
                       </div>
@@ -199,7 +146,7 @@ export default function ContactPage() {
                         <div>
                           <p className="font-medium">Response Time</p>
                           <p className="text-muted-foreground">
-                            Within 24 hours
+                            {!isMePublicError && mePublicData?.data?.responseTime !== "" ? mePublicData?.data?.responseTime : "48 Hour"}
                           </p>
                         </div>
                       </div>
@@ -234,7 +181,7 @@ export default function ContactPage() {
                     <CardContent>
                       <div className="flex flex-col gap-3">
                         <a
-                          href="https://github.com/YogaRP"
+                          href={!isMePublicError && mePublicData?.data?.github !== "" ? mePublicData?.data?.github : "https://github.com/YogaRP"}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors"
@@ -243,12 +190,12 @@ export default function ContactPage() {
                           <div>
                             <p className="font-medium">GitHub</p>
                             <p className="text-xs text-muted-foreground">
-                              @yoga-rizky
+                              {!isMePublicError && mePublicData?.data?.github !== "" ? mePublicData?.data?.github.split("/").pop() : "YogaRP"}
                             </p>
                           </div>
                         </a>
                         <a
-                          href="https://linkedin.com/in/yogarizkyputra"
+                          href={!isMePublicError && mePublicData?.data?.linkedin !== "" ? mePublicData?.data?.linkedin : "https://linkedin.com/in/yogarizkyputra"}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors"
@@ -257,7 +204,7 @@ export default function ContactPage() {
                           <div>
                             <p className="font-medium">LinkedIn</p>
                             <p className="text-xs text-muted-foreground">
-                              yoga-rizky
+                              {!isMePublicError && mePublicData?.data?.linkedin !== "" ? mePublicData?.data?.linkedin.split("/").pop() : "yogarizkyputra"}
                             </p>
                           </div>
                         </a>
@@ -276,6 +223,9 @@ export default function ContactPage() {
                 >
                   <Card className="h-fit">
                     <CardHeader>
+                      <Badge variant="outline" className="mb-6">
+                        {!isAvailError && availData?.data?.acceptJob ? "Available for new opportunities" : "Currently not available for new opportunities, but feel free to reach out!"}
+                      </Badge>
                       <CardTitle className="flex items-center gap-2">
                         <MessageSquare className="w-5 h-5" />
                         Send a Message
@@ -286,118 +236,27 @@ export default function ContactPage() {
                       </p>
                     </CardHeader>
                     <CardContent>
-                      <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="name">Name *</Label>
-                            <Input
-                              id="name"
-                              name="name"
-                              value={formData.name}
-                              onChange={handleChange}
-                              placeholder="Your full name"
-                              required
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="email">Email *</Label>
-                            <Input
-                              id="email"
-                              name="email"
-                              type="email"
-                              value={formData.email}
-                              onChange={handleChange}
-                              placeholder="your.email@example.com"
-                              required
-                            />
-                          </div>
-                        </div>
+                      <ContactMeForm />
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="subject">Subject *</Label>
-                            <Input
-                              id="subject"
-                              name="subject"
-                              value={formData.subject}
-                              onChange={handleChange}
-                              placeholder="What's this about?"
-                              required
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="projectType">Project Type</Label>
-                            <select
-                              id="projectType"
-                              name="projectType"
-                              value={formData.projectType}
-                              onChange={handleChange}
-                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            >
-                              <option value="">Select project type</option>
-                              {projectTypes.map((type) => (
-                                <option key={type} value={type}>
-                                  {type}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="message">Message *</Label>
-                          <Textarea
-                            id="message"
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            placeholder="Tell me about your project, timeline, budget, and any specific requirements. The more details you provide, the better I can help you!"
-                            rows={6}
-                            required
-                          />
-                        </div>
-
-                        <Separator />
-
-                        <div className="bg-muted/50 p-4 rounded-lg">
-                          <h4 className="font-medium mb-2">
-                            What happens next?
-                          </h4>
-                          <ul className="text-sm text-muted-foreground space-y-1">
-                            <li className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4" />
-                              I&apos;ll review your message within 24 hours
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <Coffee className="w-4 h-4" />
-                              We can schedule a call to discuss details
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <MessageSquare className="w-4 h-4" />
-                              I&apos;ll provide a detailed proposal and timeline
-                            </li>
-                          </ul>
-                        </div>
-
-                        <Button
-                          type="submit"
-                          className="w-full"
-                          size="lg"
-                          disabled={isSubmitting}
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                              Sending Message...
-                            </>
-                          ) : (
-                            <>
-                              <Send className="w-4 h-4 mr-2" />
-                              Send Message
-                            </>
-                          )}
-                        </Button>
-                      </form>
+                      <div className="bg-muted/50 p-4 rounded-lg mt-4">
+                        <h4 className="font-medium mb-2">
+                          What happens next?
+                        </h4>
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            I&apos;ll review your message within 24 hours
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Coffee className="w-4 h-4" />
+                            We can schedule a call to discuss details
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <MessageSquare className="w-4 h-4" />
+                            I&apos;ll provide a detailed proposal and timeline
+                          </li>
+                        </ul>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -435,8 +294,8 @@ export default function ContactPage() {
                       What&apos;s your typical project timeline?
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Most projects take 2-8 weeks depending on complexity.
-                      Simple websites can be completed in 1-2 weeks, while
+                      Most projects take 4-8 weeks depending on complexity.
+                      Simple websites can be completed in 1-4 weeks, while
                       complex applications may take 2-3 months.
                     </p>
                   </CardContent>

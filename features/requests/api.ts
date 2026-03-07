@@ -16,6 +16,10 @@ export const requestsApi = {
     return http.get(`/collab-requests/${id}/attachment`);
   },
 
+  createCollabRequest: (data: Partial<Request>) => {
+    return http.post("/collab-requests", data)
+  },
+
   delete: (id: number) => {
     return http.delete(`/collab-requests/${id}`);
   },

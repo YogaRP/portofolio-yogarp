@@ -9,3 +9,5 @@ export const profileSchema = z.object({
     github: z.string().url("Invalid GitHub URL").optional().or(z.literal("")),
     linkedin: z.string().url("Invalid LinkedIn URL").optional().or(z.literal("")),
 });
+
+export type ProfileFormData = z.infer<typeof profileSchema>;

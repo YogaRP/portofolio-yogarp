@@ -3,9 +3,6 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useUpdateProfile, useUpdateAvailibility } from "@/features/auth/hooks";
-import { Contract, JobType, User, Availibility } from "@/features/auth/types";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,11 +15,15 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-import { profileSchema } from "@/features/auth/schema";
-import { availibilitySchema } from "@/features/availibility/schema";
+import { ProfileFormData, profileSchema } from "@/features/user/schema";
+import { AvailibilityFormData, availibilitySchema } from "@/features/availibility/schema";
+import { toast } from "sonner";
+import { User } from "@/features/user/types";
+import { Availibility, Contract, JobType } from "@/features/availibility/types";
+import { useUpdateProfile } from "@/features/user/hooks";
+import { useUpdateAvailibility } from "@/features/availibility/hooks";
 
-type ProfileFormData = z.infer<typeof profileSchema>;
-type AvailibilityFormData = z.infer<typeof availibilitySchema>;
+
 
 interface ProfileFormProps {
     user?: User;
@@ -35,7 +36,6 @@ export function ProfileForm({
     availibility,
     onSuccess,
 }: ProfileFormProps) {
-    const [profileImage, setProfileImage] = useState<string | null>(null);
     const updateProfile = useUpdateProfile(user?.id!!);
     const updateAvailibility = useUpdateAvailibility(availibility?.id!!);
     const isLoading = updateProfile.isPending || updateAvailibility.isPending;
@@ -85,9 +85,11 @@ export function ProfileForm({
             // Update availibility
             await updateAvailibility.mutateAsync(availibilityData);
 
+            toast("Profile updated successfully", { position: "bottom-center" });
             onSuccess?.();
         } catch (error) {
             console.error("Error updating profile:", error);
+            toast("Failed to update profile", { position: "bottom-center" });
         }
     };
 

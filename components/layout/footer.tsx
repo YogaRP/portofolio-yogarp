@@ -1,8 +1,14 @@
+"use client"
+
+import { useGetAvailibility } from "@/features/availibility/hooks";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
+import { useGetMePublic } from "@/features/user/hooks";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+
+  const { data: mePublicData, isFetched: isMePublicFetched } = useGetMePublic()
 
   return (
     <footer className="border-t bg-background">
@@ -46,7 +52,7 @@ export function Footer() {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/YogaRP"
+              href={isMePublicFetched && mePublicData?.data?.github !== "" ? mePublicData?.data?.github : "https://github.com/YogaRP"}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -54,7 +60,7 @@ export function Footer() {
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/yogarizkyputra"
+              href={isMePublicFetched && mePublicData?.data?.linkedin !== "" ? mePublicData?.data?.linkedin : "https://linkedin.com/in/yogarizkyputra"}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -62,7 +68,7 @@ export function Footer() {
               LinkedIn
             </a>
             <a
-              href="mailto:yogarizky51@gmail.com"
+              href={isMePublicFetched && mePublicData?.data?.email !== "" ? `mailto:${mePublicData?.data?.email}` : "mailto:yogarizky51@gmail.com"}
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               Email

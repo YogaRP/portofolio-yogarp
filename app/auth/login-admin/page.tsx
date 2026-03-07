@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLogin } from "@/features/auth/hooks";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -29,6 +31,10 @@ const AdminLogin = () => {
     <div className="flex min-h-screen items-center justify-center bg-[#f0f0f0] text-black">
       <Card className="w-[380px] border-black/10 ">
         <CardHeader>
+          <Link href={'/'} className="flex gap-1 hover:underline">
+            <ArrowLeft size={20} />
+            <p className="text-sm">Back to home</p>
+          </Link>
           <CardTitle className="text-2xl font-semibold">Login Admin</CardTitle>
           <p className="text-sm text-muted-foreground">
             Welcome back. Enter your credentials.
