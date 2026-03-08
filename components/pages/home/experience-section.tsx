@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardContent } from "../ui/card";
-import { Badge } from "../ui/badge";
+import { Card, CardContent } from "../../ui/card";
+import { Badge } from "../../ui/badge";
 import { Calendar, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { experiences } from "@/data/experience";

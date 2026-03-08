@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Badge } from "../ui/badge";
-import { Separator } from "../ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import { Badge } from "../../ui/badge";
+import { Separator } from "../../ui/separator";
 import { motion } from "framer-motion";
 import { skills } from "@/data/skills";
 

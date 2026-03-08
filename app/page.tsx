@@ -1,9 +1,9 @@
-import { HeroSection } from "../components/sections/hero-section";
-import { AboutSection } from "../components/sections/about-section";
-import { ProjectsSection } from "../components/sections/projects-section";
-import { ExperienceSection } from "../components/sections/experience-section";
-import CertificateSection from "../components/sections/certificate-section";
-import { ContactSection } from "../components/sections/contact-section";
+import { HeroSection } from "../components/pages/home/hero-section";
+import { AboutSection } from "../components/pages/home/about-section";
+import { ProjectsSection } from "../components/pages/home/projects-section";
+import { ExperienceSection } from "../components/pages/home/experience-section";
+import CertificateSection from "../components/pages/home/certificate-section";
+import { ContactSection } from "../components/pages/home/contact-section";
 import { Footer } from "../components/layout/footer";
 import { Navigation } from "../components/layout/navigation";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardContent } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Card, CardContent } from "../../ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { Quote } from "lucide-react";
 import { motion } from "framer-motion";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import {
   Mail,
   MessageSquare,
@@ -13,8 +13,8 @@ import {
 import { motion } from "framer-motion";
 import { useGetAvailibility } from "@/features/availibility/hooks";
 import { useGetMePublic } from "@/features/user/hooks";
-import { Badge } from "../ui/badge";
-import ContactMeForm from "../forms/contact-me-form";
+import { Badge } from "../../ui/badge";
+import ContactMeForm from "../../forms/contact-me-form";
 
 export function ContactSection() {
   const { data: availData, isError: isAvailError
