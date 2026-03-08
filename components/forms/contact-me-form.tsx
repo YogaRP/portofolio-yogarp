@@ -1,9 +1,7 @@
 import { Send } from 'lucide-react';
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
-import { Label } from '../ui/label';
 import { Controller, useForm } from 'react-hook-form';
 import { CollabRequestFormData, collabRequestSchema } from '@/features/requests/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -152,14 +150,16 @@ const ContactMeForm = () => {
                     <Controller
                         name='attachment'
                         control={form.control}
-                        render={({ field: { onChange, value, ...field }, fieldState }) => (
+                        render={({ field: { onChange, ...field }, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="attachment">Attachment (optional)</FieldLabel>
                                 <Input
-                                    {...field}
+                                    name={field.name}
                                     ref={fileInputRef}
                                     type='file'
                                     aria-invalid={fieldState.invalid}
+                                    onBlur={field.onBlur}
+                                    disabled={field.disabled}
                                     onChange={(e) => onChange(e.target.files?.[0])}
                                 />
                                 {fieldState.invalid && (

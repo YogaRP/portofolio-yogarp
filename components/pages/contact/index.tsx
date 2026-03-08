@@ -10,7 +10,6 @@ import { Badge } from "../../../components/ui/badge";
 import {
     Mail,
     MessageSquare,
-    Send,
     Github,
     Linkedin,
     MapPin,

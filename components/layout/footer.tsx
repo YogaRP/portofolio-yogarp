@@ -1,6 +1,5 @@
 "use client"
 
-import { useGetAvailibility } from "@/features/availibility/hooks";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
 import { useGetMePublic } from "@/features/user/hooks";

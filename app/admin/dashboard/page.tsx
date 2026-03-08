@@ -1,16 +1,11 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { requestsApi } from "@/features/requests/api";
-import { Request } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  MessageCircle,
   Mail,
   FileText,
   Calendar,
-  Trash2,
   Eye,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -22,7 +17,6 @@ export default function DashboardPage() {
 
   const requests = requestsData || [];
   const totalRequests = requests.length;
-  const unreadRequests = requests.length; // You can track read status if needed
   const recentRequests = requests.slice(0, 5);
 
   const getInitials = (email: string) => {

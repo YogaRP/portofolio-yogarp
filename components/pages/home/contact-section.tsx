@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import {
   Mail,
   MessageSquare,
-  Send,
   Github,
   Linkedin,
   MapPin,

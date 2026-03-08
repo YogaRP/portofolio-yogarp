@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -36,8 +35,8 @@ export function ProfileForm({
     availibility,
     onSuccess,
 }: ProfileFormProps) {
-    const updateProfile = useUpdateProfile(user?.id!!);
-    const updateAvailibility = useUpdateAvailibility(availibility?.id!!);
+    const updateProfile = useUpdateProfile(user?.id as number);
+    const updateAvailibility = useUpdateAvailibility(availibility?.id as number);
     const isLoading = updateProfile.isPending || updateAvailibility.isPending;
 
     const profileForm = useForm<ProfileFormData>({

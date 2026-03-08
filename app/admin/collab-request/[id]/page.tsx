@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -33,10 +33,9 @@ const DetailPage = () => {
   const params = useParams();
   const id = params.id as unknown
 
-  const { data, isFetched, isFetching } = useGetByIdCollabRequest(id as number)
+  const { data, isFetching } = useGetByIdCollabRequest(id as number)
 
   const {
-    data: attachment,
     refetch: fetchAttachment,
     isFetching: isFetchingAttachment,
   } = useGetAttachmentCollabRequest(id as number);
@@ -50,6 +49,7 @@ const DetailPage = () => {
       }
     } catch (error) {
       toast("File not found or already deleted.", { position: "bottom-center" })
+      console.error("Error fetching attachment:", error);
     }
   };
   if (isFetching) {

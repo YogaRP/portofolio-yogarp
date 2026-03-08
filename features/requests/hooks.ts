@@ -42,7 +42,6 @@ export const useGetByIdCollabRequest = (id: number) => {
 
 export const useGetAttachmentCollabRequest = (
   id: number,
-  options?: UseQueryOptions<any, unknown, any, readonly unknown[]>
 ) => {
   return useQuery({
     queryKey: [collabRequestKeys.collab_request, "attachment", id],
