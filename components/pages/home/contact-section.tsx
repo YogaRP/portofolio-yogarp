@@ -158,7 +158,7 @@ export function ContactSection() {
               <CardHeader className="pb-4">
                 <Badge
                   variant="outline"
-                  className="mb-6 w-full justify-start h-auto whitespace-normal"
+                  className="mb-6 justify-start h-auto whitespace-normal"
                 >
                   {!isAvailError && availData?.data?.acceptJob
                     ? "Available for new opportunities"
