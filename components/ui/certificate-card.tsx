@@ -105,7 +105,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         )}
       </Card>
 
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="md:max-w-2xl max-h-[90vh] md:overflow-y-auto">
         <DialogHeader>
           <div className="flex items-start gap-3 pr-8">
             <div className="p-2 bg-muted rounded-lg">{getIcon()}</div>

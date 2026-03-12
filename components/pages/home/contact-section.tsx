@@ -16,9 +16,8 @@ import { Badge } from "../../ui/badge";
 import ContactMeForm from "../../forms/contact-me-form";
 
 export function ContactSection() {
-  const { data: availData, isError: isAvailError
-  } = useGetAvailibility()
-  const { data: mePublicData, isError: isMePublicError } = useGetMePublic()
+  const { data: availData, isError: isAvailError } = useGetAvailibility();
+  const { data: mePublicData, isError: isMePublicError } = useGetMePublic();
 
   return (
     <section id="contact" className="py-24 px-6 lg:px-8">
@@ -34,7 +33,8 @@ export function ContactSection() {
             Let&apos;s Work Together
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Interested in collaborating or discussing ideas? Let&apos;s connect 🚀
+            Interested in collaborating or discussing ideas? Let&apos;s connect
+            🚀
           </p>
         </motion.div>
 
@@ -64,10 +64,16 @@ export function ContactSection() {
                 <div>
                   <p className="font-medium">Email</p>
                   <a
-                    href={!isMePublicError && mePublicData?.data?.email !== "" ? `mailto:${mePublicData?.data?.email}` : "mailto:yogarizky51@gmail.com"}
+                    href={
+                      !isMePublicError && mePublicData?.data?.email !== ""
+                        ? `mailto:${mePublicData?.data?.email}`
+                        : "mailto:yogarizky51@gmail.com"
+                    }
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    {!isMePublicError && mePublicData?.data?.email !== "" ? mePublicData?.data?.email : "yogarizky51@gmail.com"}
+                    {!isMePublicError && mePublicData?.data?.email !== ""
+                      ? mePublicData?.data?.email
+                      : "yogarizky51@gmail.com"}
                   </a>
                 </div>
               </div>
@@ -79,10 +85,16 @@ export function ContactSection() {
                 <div>
                   <p className="font-medium">Phone</p>
                   <a
-                    href={!isMePublicError && mePublicData?.data?.phone !== "" ? `tel:${mePublicData?.data?.phone}` : "tel:+6281234567890"}
+                    href={
+                      !isMePublicError && mePublicData?.data?.phone !== ""
+                        ? `tel:${mePublicData?.data?.phone}`
+                        : "tel:+6281234567890"
+                    }
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    {!isMePublicError && mePublicData?.data?.phone !== "" ? mePublicData?.data?.phone : "+6287870548126"}
+                    {!isMePublicError && mePublicData?.data?.phone !== ""
+                      ? mePublicData?.data?.phone
+                      : "+6287870548126"}
                   </a>
                 </div>
               </div>
@@ -94,7 +106,9 @@ export function ContactSection() {
                 <div>
                   <p className="font-medium">Location</p>
                   <p className="text-muted-foreground max-w-2/3">
-                    {!isAvailError && availData?.data?.jobLocation ? availData?.data?.jobLocation : "Bogor, Depok, Jakarta, Indonesia (Remote Friendly)"}
+                    {!isAvailError && availData?.data?.jobLocation
+                      ? availData?.data?.jobLocation
+                      : "Bogor, Depok, Jakarta, Indonesia (Remote Friendly)"}
                   </p>
                 </div>
               </div>
@@ -104,7 +118,11 @@ export function ContactSection() {
               <h4 className="font-medium mb-4">Follow Me</h4>
               <div className="flex gap-4">
                 <a
-                  href={!isMePublicError && mePublicData?.data?.github !== "" ? mePublicData?.data?.github : "https://github.com/YogaRP"}
+                  href={
+                    !isMePublicError && mePublicData?.data?.github !== ""
+                      ? mePublicData?.data?.github
+                      : "https://github.com/YogaRP"
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -113,7 +131,11 @@ export function ContactSection() {
                   GitHub
                 </a>
                 <a
-                  href={!isMePublicError && mePublicData?.data?.linkedin !== "" ? mePublicData?.data?.linkedin : "https://linkedin.com/in/yogarizkyputra"}
+                  href={
+                    !isMePublicError && mePublicData?.data?.linkedin !== ""
+                      ? mePublicData?.data?.linkedin
+                      : "https://linkedin.com/in/yogarizkyputra"
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -133,9 +155,14 @@ export function ContactSection() {
             viewport={{ once: true }}
           >
             <Card>
-              <CardHeader>
-                <Badge variant="outline" className="mb-6">
-                  {!isAvailError && availData?.data?.acceptJob ? "Available for new opportunities" : "Currently not available for new opportunities, but feel free to reach out!"}
+              <CardHeader className="pb-4">
+                <Badge
+                  variant="outline"
+                  className="mb-6 w-full justify-start h-auto whitespace-normal"
+                >
+                  {!isAvailError && availData?.data?.acceptJob
+                    ? "Available for new opportunities"
+                    : "Currently not available for new opportunities, but feel free to reach out!"}
                 </Badge>
                 <CardTitle className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
